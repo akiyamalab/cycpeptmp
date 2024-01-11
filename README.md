@@ -8,19 +8,24 @@
 
 ![framework](https://github.com/akiyamalab/cycpeptmp/assets/44156441/c7bc4c2d-c195-4fb0-87aa-2676f0b2b6a0)
 
+
+
 ## Requirements
-- Python: 3.9.6 (CUDA: 11.7)
+- Python: 3.9.6
 - Numpy: 1.25.0
 - Pandas: 1.4.4
-- Pytorch: 2.0.0
+- Pytorch: 2.0.0 (CUDA: 11.7)
 - RDKit: 2022.09.5
 - Mordred: 1.2.0
 - *MOE: 2019.01　(commercial software)*
 - Optuna: 3.2.0
 
+
+
 ## Dataset
 - The original cyclic peptide structure (SMILES) and experimentally determined membrane permeability (LogPexp) used in this study were all sourced from [**CycPeptMP**](http://cycpeptmpdb.com/).
   - Li J., Yanagisawa K., Sugita M., Fujie T., Ohue M., and Akiyama Y. [CycPeptMPDB: A Comprehensive Database of Membrane Permeability of Cyclic Peptides](https://pubs.acs.org/doi/10.1021/acs.jcim.2c01573), _Journal of Chemical Information and Modeling_, **63**(7): 2240–2250, 2023. doi: 10.1021/acs.jcim.2c01573.
+
 
 
 ## Code
