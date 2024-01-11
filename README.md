@@ -19,14 +19,18 @@
 - Optuna: 3.2.0
 
 ## Dataset
-- The cyclic peptide structure (SMILES) and experimentally determined membrane permeability (LogPexp) used in this study were all sourced from CycPeptMP (http://cycpeptmpdb.com/).
-  - Li J., Yanagisawa K., Sugita M., Fujie T., Ohue M., and Akiyama Y. CycPeptMPDB: A Comprehensive Database of Membrane Permeability of Cyclic Peptides, Journal of Chemical Information and Modeling, 63(7): 2240–2250, 2023. doi: 10.1021/acs.jcim.2c01573
+- The original cyclic peptide structure (SMILES) and experimentally determined membrane permeability (LogPexp) used in this study were all sourced from [**CycPeptMP**](http://cycpeptmpdb.com/).
+  - Li J., Yanagisawa K., Sugita M., Fujie T., Ohue M., and Akiyama Y. [CycPeptMPDB: A Comprehensive Database of Membrane Permeability of Cyclic Peptides](https://pubs.acs.org/doi/10.1021/acs.jcim.2c01573), _Journal of Chemical Information and Modeling_, **63**(7): 2240–2250, 2023. doi: 10.1021/acs.jcim.2c01573.
+
 
 ## Code
 
+
 ## Pretrained weights
 
+
 ## Reference
+- Li J., Yanagisawa K., and Akiyama Y. CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation, _Briefings in Bioinformatics_, submitted.
 
 ## Contact
-
+- Jianan Li: li@bi.c.titech.ac.jp
