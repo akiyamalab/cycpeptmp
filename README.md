@@ -19,7 +19,7 @@
 - RDKit: 2022.09.5
 - Mordred: 1.2.0
 - *MOE: 2019.01　(commercial software)*
-- Optuna: 3.2.0
+
 
 
 
@@ -39,6 +39,8 @@
 
 
 ## Pretrained weights
+- Weights of CycPeptMP (60 times augmentation) for three validation runs (_Fusion-60_cv*.cpt_).
+- Weights of fusion model with no augmentation (_Fusion-1_cv*.cpt_) and 20 times augmentation (_Fusion-20_cv*.cpt_) for three validation runs in ablation studies.
 
 
 
