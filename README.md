@@ -30,10 +30,10 @@
 
 
 ## Code
-- EXAMPLE.ipynb 
+- EXAMPLE.ipynb
   > Jupyter notebook with an example of prediction.
 
-- EXAMPLE.py 
+- EXAMPLE.py
   > Jupyter notebook with an example of prediction.
 
 
