@@ -1,5 +1,6 @@
 # CycPeptMP
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-orange.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 
 ## About
 - The official Python implementation of the **CycPeptMP**.
