@@ -34,8 +34,15 @@
   > Jupyter notebook with an example of prediction.
 
 - `atoms_model.py`
-  > Transformer-based atom model using _Node_, _Bond_, _Graph_, and _Conf_ created from `atoms_input.py`. \\
-  > The maximum number of heavy atoms of the input is 128.
+  > Transformer-based atom model using _Node_, _Bond_, _Graph_, and _Conf_ created from `atoms_input.py`.
+  > The maximum number of heavy atoms in the input is 128.
+
+- `monomers_model.py`
+  > CNN-based monomer model using 16 monomer features created from `monomers_input.py`.
+  > The maximum number of monomers in the input is 16.
+
+- `peptides_model.py`
+  > MLP-based peptide model using 16 peptide features and 2048-bit Morgan fingerprint.
 
 
 
