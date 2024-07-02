@@ -13,11 +13,12 @@ from mordred import Calculator, descriptors
 
 
 def canonicalize_smiles(smiles):
+    """""Canonicalize SMILES"""""
     return Chem.MolToSmiles(Chem.MolFromSmiles(smiles))
 
 
 def combine_cxsmiles(cxsmiles, symbol, R3_dict):
-    """""Change CXSmiles to MySmiles"""""
+    """""Combine monomer of side chain to a substructure"""""
     for i in range(len(cxsmiles)):
         tmp = cxsmiles[i].split(' |')[0]
         for _ in re.findall('_R\d', cxsmiles[i]):

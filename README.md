@@ -3,7 +3,7 @@
 
 
 ## About open source
-- The paper of CycPeptMP is currently under review, and reviewers may also submit comments for revision, so I have not fully published my code and data (the bioRxiv preview version of the paper also did not show the GitHub link).
+- The paper of CycPeptMP is currently under review, since reviewers may also submit comments for revision, I have not fully published my code and data (the bioRxiv preview version of the paper also did not show the GitHub link).
 - The peer review process is expected to be completed by the end of July.
 
 
@@ -24,7 +24,7 @@
 - Pytorch: 2.0.0 (CUDA: 11.7)
 - RDKit: 2022.09.5
 - Mordred: 1.2.0
-- *MOE: 2019.01　(commercial software)*
+- *MOE: 2019.01 (commercial software)*
 
 
 
@@ -32,7 +32,7 @@
 ## Dataset
 - The original cyclic peptide structure (SMILES) and experimentally determined membrane permeability (_LogPexp_) used in this study (`CycPeptMPDB_Peptide_All.csv`) were all sourced from [**CycPeptMPDB**](http://cycpeptmpdb.com/).
   - Li J., Yanagisawa K., Sugita M., Fujie T., Ohue M., and Akiyama Y. [CycPeptMPDB: A Comprehensive Database of Membrane Permeability of Cyclic Peptides](https://pubs.acs.org/doi/10.1021/acs.jcim.2c01573), _Journal of Chemical Information and Modeling_, **63**(7): 2240–2250, 2023.
-- Selected PAMPA datasets used in this research are summarized in `all_data.csv`.
+- Selected PAMPA datasets used in this research are summarized in `hogehoge.csv`.
 
 
 ## Code
@@ -45,7 +45,7 @@
 
 - `monomers_model.py`
   > CNN-based monomer model using 16 monomer features created from `monomers_input.py`.
-  > The maximum number of monomers in the input is 16.
+  > The maximum number of monomers in the input is 15.
 
 - `peptides_model.py`
   > MLP-based peptide model using 16 peptide features and 2048-bit Morgan fingerprint.
