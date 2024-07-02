@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
+import re
 from scipy.stats import pearsonr
 from tqdm import tqdm
 
 from rdkit import Chem
+from rdkit.Chem import AllChem
 from rdkit.ML.Descriptors import MoleculeDescriptors
 from mordred import Calculator, descriptors
 
@@ -12,6 +14,36 @@ from mordred import Calculator, descriptors
 
 def canonicalize_smiles(smiles):
     return Chem.MolToSmiles(Chem.MolFromSmiles(smiles))
+
+
+def combine_cxsmiles(cxsmiles, symbol, R3_dict):
+    """""Change CXSmiles to MySmiles"""""
+    for i in range(len(cxsmiles)):
+        tmp = cxsmiles[i].split(' |')[0]
+        for _ in re.findall('_R\d', cxsmiles[i]):
+            if _ == '_R1':
+                tmp = tmp.replace('[*]', '[1C]', 1)
+            elif _ == '_R2':
+                tmp = tmp.replace('[*]', '[2C]', 1)
+            elif _ == '_R3':
+                # If R3 is not used, change it back to H or OH.
+                tmp = tmp.replace('[*]', '['+R3_dict[symbol[i]]+']', 1)
+
+        # Combine
+        rxn = AllChem.ReactionFromSmarts('[*:1][2C].[1C][*:2]>>[*:1][*:2]')
+        now_mol = Chem.MolFromSmiles(tmp)
+        if i == 0:
+            mol = now_mol
+        else:
+            mol = rxn.RunReactants((mol, now_mol))[0][0]
+
+    # Replace unused R1 and R2.
+    smi = canonicalize_smiles(Chem.MolToSmiles(mol).replace('[1C]', '[H]').replace('[2C]', '[OH]'))
+
+    return smi
+
+
+
 
 
 

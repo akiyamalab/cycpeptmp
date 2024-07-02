@@ -1,0 +1,34 @@
+{
+    "data": {
+        "org_peptide_path": "data/CycPeptMPDB_Peptide_All.csv",
+        "org_monomer_path": "data/CycPeptMPDB_Monomer_All.csv",
+        "monomer_max_len": 15,
+        "substructures_table_path": "data/substructures_table.csv",
+        "unique_substructures_path": "data/unique_substructures.csv",
+        "peptide_path": "data/pep_sequence.csv",
+        "monomer_path": "data/monomer_list.csv",
+        "smiles_name": "mol",
+        "target_name": "PPB_50_95",
+        "upper_limit": -4,
+        "lower_limit": -8
+    },
+    "augmentation": {
+        "replica_num": 60,
+        "sme_dup_thresh": 1000
+    },
+    "conformation": {
+        "sub_file_num": 10,
+        "maxAttempts": 1000000,
+        "ff": "UFF",
+        "mono_conf_num": 200,
+        "mono_rms_thresh": 0.005
+    },
+    "validation": {
+        "test_size": 0.1,
+        "cv": 3,
+        "cv_seed": [2333, 1204, 2024]
+    },
+    "feature_selection": {
+        "similarity_thresh": 0.9
+    }
+}
