@@ -2,12 +2,18 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 
+## About open source
+- The paper of CycPeptMP is currently under review, and reviewers may also submit comments for revision, so I have not fully published my code and data (the bioRxiv preview version of the paper also did not show the GitHub link).
+- The peer review process is expected to be completed by the end of July.
+
+
+
 ## About
 - Python implementation of **CycPeptMP**.
 - **CycPeptMP** is an accurate and efficient method for predicting the membrane permeability of cyclic peptides.
 - We designed features for cyclic peptides at the atom, monomer, and peptide levels to concurrently capture both the local sequence variations and global conformational changes in cyclic peptides. We also applied data augmentation techniques at three scales to enhance model training efficiency.
 
-  ![framework](https://github.com/akiyamalab/cycpeptmp/assets/44156441/c7bc4c2d-c195-4fb0-87aa-2676f0b2b6a0)
+[framework.pdf](https://github.com/user-attachments/files/16062350/framework.pdf)
 
 
 
@@ -53,7 +59,7 @@
 
 
 ## Reference
-- Li J., Yanagisawa K., and Akiyama Y. CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation, _Briefings in Bioinformatics_, submitted.
+- Li J., Yanagisawa K., and Akiyama Y. CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation, _Briefings in Bioinformatics_, under review.
 - Li J., Yanagisawa K., and Akiyama Y. [CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation](https://www.biorxiv.org/content/10.1101/2023.12.25.573282v1), _bioRxiv preprint_, 2023, 2023.12. 25.573282.
 
 
