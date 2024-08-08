@@ -5,30 +5,35 @@
         "monomer_max_len": 15,
         "substructures_table_path": "data/substructures_table.csv",
         "unique_substructures_path": "data/unique_substructures.csv"
-        // "peptide_path": "data/pep_sequence.csv",
-        // "monomer_path": "data/monomer_list.csv",
-        // "smiles_name": "mol",
-        // "target_name": "PPB_50_95",
-        // "upper_limit": -4,
-        // "lower_limit": -8
     },
-    "augmentation": {
-        "replica_num": 60,
-        "sme_dup_thresh": 1000
-    },
-    "conformation": {
-        "sub_file_num": 10,
-        "maxAttempts": 1000000,
-        "ff": "UFF",
-        "mono_conf_num": 200,
-        "mono_rms_thresh": 0.005
-    },
-    "validation": {
-        "test_size": 0.1,
-        "cv": 3,
-        "cv_seed": [2333, 1204, 2024]
-    },
-    "feature_selection": {
-        "similarity_thresh": 0.9
+    "model": {
+        "number": 140,
+        "params_CNN_num_conv": 6,
+        "params_CNN_num_linear": 1,
+        "params_CNN_pooling_name": "ave",
+        "params_CNN_type": "AugCNN",
+        "params_Fusion_num_concat": 2,
+        "params_MLP_dim_mlp": 256,
+        "params_MLP_dropout_rate": 0.25,
+        "params_MLP_num_mlp": 1,
+        "params_Trans_dim_feedforward": 512,
+        "params_Trans_dropout_rate": 0.2,
+        "params_Trans_gamma_g": 0.9,
+        "params_Trans_head_num": 16,
+        "params_Trans_model_dim": 32,
+        "params_Trans_n_encoders": 2,
+        "params_Trans_n_linears": 1,
+        "params_activation_name": "LeakyReLU",
+        "params_batch_size": 256,
+        "params_conv_units0": 128,
+        "params_conv_units1": 128,
+        "params_conv_units2": 32,
+        "params_conv_units3": 256,
+        "params_conv_units4": 256,
+        "params_conv_units5": 64,
+        "params_dim_linear": 512,
+        "params_dim_out": 64,
+        "params_optimizer_name": "AdamW",
+        "params_weight_decay": 0.1
     }
 }
