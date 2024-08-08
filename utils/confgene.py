@@ -31,7 +31,6 @@ def peptide_conformation_genetation(config, df, mol_type, sub):
 
 
 
-
 def monomer_conformation_genetation(config, df, mol_type):
     """
     Unlike peptides, generate mono_conf_num (200) conformations per monomer and select the top replica_num (60) conformations.
@@ -77,25 +76,3 @@ def monomer_conformation_genetation(config, df, mol_type):
             writer.write(mol, confId=cid)
 
     writer.close()
-
-
-
-
-
-# import argparse
-
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser(description='Generate and optimize conformer using RDKit.')
-#     parser.add_argument('arg1', help='index of the subset (0~', type=int)
-#     parser.add_argument('--sub_len', help='length of each subset', type=int)
-#     # parser.add_argument('--rmsd', help='redundant conformation threshold', default=1.0, type=float)
-#     # parser.add_argument('--num_initial', help='number of conformers generated before selecting by energy', default=5000, type=int)
-#     # parser.add_argument('--num_conf', help='number of conformations to generate', default=500, type=int)
-#     parser.add_argument('--maxAttempts', help='maximum number of generation attempts', type=int)
-#     # parser.add_argument('--ff', help='optimization method', default='uff', choices=['uff', 'mmff'])
-
-#     args = parser.parse_args()
-
-#     # peptide_conformation_genetation(args)
-
-

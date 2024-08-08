@@ -4,13 +4,13 @@
         "org_monomer_path": "data/CycPeptMPDB_Monomer_All.csv",
         "monomer_max_len": 15,
         "substructures_table_path": "data/substructures_table.csv",
-        "unique_substructures_path": "data/unique_substructures.csv",
-        "peptide_path": "data/pep_sequence.csv",
-        "monomer_path": "data/monomer_list.csv",
-        "smiles_name": "mol",
-        "target_name": "PPB_50_95",
-        "upper_limit": -4,
-        "lower_limit": -8
+        "unique_substructures_path": "data/unique_substructures.csv"
+        // "peptide_path": "data/pep_sequence.csv",
+        // "monomer_path": "data/monomer_list.csv",
+        // "smiles_name": "mol",
+        // "target_name": "PPB_50_95",
+        // "upper_limit": -4,
+        // "lower_limit": -8
     },
     "augmentation": {
         "replica_num": 60,
