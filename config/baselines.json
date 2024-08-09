@@ -1,0 +1,17 @@
+{
+    "SVM":{
+        "desc_2D": ["VSA_EState9_mordred", "density", "MolLogP", "fr_Al_OH", "logP(o/w)", "lip_violation", "h_logD"],
+        "desc_3D": ["dens", "FNSA4", "RNCS", "FASA-", "FCASA+", "FASA_P", "FNSA2", "FNSA5", "vsurf_Wp2"],
+        "C-2D": 8,
+        "C-2D3D": 4,
+        "gamma-2D": 0.5,
+        "gamma-2D3D": 0.0625
+    },
+    "RF":{
+        "n_estimators": 750,
+        "max_depth": 20
+    },
+    "MAT":{
+        
+    }
+}

@@ -1,11 +1,4 @@
 {
-    "data": {
-        "org_peptide_path": "data/CycPeptMPDB_Peptide_All.csv",
-        "org_monomer_path": "data/CycPeptMPDB_Monomer_All.csv",
-        "monomer_max_len": 15,
-        "substructures_table_path": "data/substructures_table.csv",
-        "unique_substructures_path": "data/unique_substructures.csv"
-    },
     "model": {
         "number": 140,
         "params_CNN_num_conv": 6,

@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
 import re
+import os
 from scipy.stats import pearsonr
 from tqdm import tqdm
 
-from rdkit import Chem
+from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem
 from rdkit.ML.Descriptors import MoleculeDescriptors
 from mordred import Calculator, descriptors
@@ -122,28 +123,6 @@ def delete_standard_deviation(x):
 
 
 
-# def delete_similarity(x, y, threshold=0.9):
-#     features_delete_R = []
-#     for i in range(x.shape[1]):
-#         if x.columns[i] not in features_delete_R:
-#             a = x.iloc[:, i].values
-#             for j in range(i):
-#                 if x.columns[j] not in features_delete_R:
-#                     b = x.iloc[:, j].values
-#                     R = abs(pearsonr(a, b)[0])
-#                     # If |R|>threshold, remove the one with lower correlation to y
-#                     if ((R > threshold) and (i != j)):
-#                         cor_a = abs(pearsonr(a, y)[0])
-#                         cor_b = abs(pearsonr(b, y)[0])
-#                         if cor_a <= cor_b:
-#                             features_delete_R.append(x.columns[i])
-#                         else:
-#                             features_delete_R.append(x.columns[j])
-#     features_delete_R = list(set(features_delete_R))
-#     return features_delete_R
-
-
-
 def delete_similarity(X, y, threshold=0.9):
     """
     For descriptor pairs whose correlation > th,
@@ -191,3 +170,20 @@ def entire_preprocessing(x, y, threshold=0.9):
     return features_delete_std, features_delete_R, data_preprocessed
 
 
+
+def calc_fingerprint(smiles, radius, bit_num):
+    """
+    Calculate Morgan fingerprint.
+    """
+    fps_list = []
+
+    for smi in tqdm(smiles):
+        mol = Chem.MolFromSmiles(smi)
+        radius = radius
+        fps = AllChem.GetMorganFingerprintAsBitVect(mol, radius=radius, nBits=bit_num)
+
+        bit_vec = np.zeros(bit_num)
+        DataStructs.ConvertToNumpyArray(fps, bit_vec)
+        fps_list.append(bit_vec)
+
+    return np.array(fps_list)
