@@ -30,25 +30,25 @@
 
 
 ## Dataset
-- The original cyclic peptide structure (SMILES) and experimentally determined membrane permeability (_LogPexp_) used in this study (`CycPeptMPDB_Peptide_All.csv`) were all sourced from [**CycPeptMPDB**](http://cycpeptmpdb.com/).
+- Original cyclic peptide structure (SMILES) and experimentally determined membrane permeability (_LogPexp_) used in this study (`data/CycPeptMPDB_Peptide_All.csv`) were all sourced from [**CycPeptMPDB**](http://cycpeptmpdb.com/).
   - Li J., Yanagisawa K., Sugita M., Fujie T., Ohue M., and Akiyama Y. [CycPeptMPDB: A Comprehensive Database of Membrane Permeability of Cyclic Peptides](https://pubs.acs.org/doi/10.1021/acs.jcim.2c01573), _Journal of Chemical Information and Modeling_, **63**(7): 2240–2250, 2023.
-- Selected PAMPA datasets used in this research are summarized in `hogehoge.csv`.
+- Correspondence table of peptides and their constituent monomers is summarized in `data/substructures_table.csv`.
+- Data used in this experiment, with duplicates removed (all: 7,451->7,337, **PAMPA: 6,941->6,889**), is summarized in `desc/peptides_used.csv`.
+- Dataset split index is stored in `data/eval_index/`.
+  > `*_ID.npy` shows the CycPeptMPDB peptide ID.
+  > `*_index.npy` shows the index in sorted `desc/peptides_used.csv`.
+
+
 
 
 ## Code
-- `EXAMPLE.ipynb`
-  > Jupyter notebook with an example of prediction.
+- `Testset.ipynb`
+  > Prediction for the test set (and other assay data) shown in the paper by CycPeptMP and other baselines.
+  > Please download complete input files `model/input/Trans/60/` from `hogehoge`.
 
-- `atoms_model.py`
-  > Transformer-based atom model using _Node_, _Bond_, _Graph_, and _Conf_ created from `atoms_input.py`.
-  > The maximum number of heavy atoms in the input is 128.
+- `Newdata.ipynb`
+  > Prediction for new data.
 
-- `monomers_model.py`
-  > CNN-based monomer model using 16 monomer features created from `monomers_input.py`.
-  > The maximum number of monomers in the input is 15.
-
-- `peptides_model.py`
-  > MLP-based peptide model using 16 peptide features and 2048-bit Morgan fingerprint.
 
 
 
@@ -58,8 +58,9 @@
 
 
 
+
 ## Reference
-- Li J., Yanagisawa K., and Akiyama Y. CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation, _Briefings in Bioinformatics_, under review.
+- Li J., Yanagisawa K., and Akiyama Y. CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation, _Briefings in Bioinformatics_, accepted.
 - Li J., Yanagisawa K., and Akiyama Y. [CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation](https://www.biorxiv.org/content/10.1101/2023.12.25.573282v1), _bioRxiv preprint_, 2023, 2023.12. 25.573282.
 
 

@@ -1,4 +1,4 @@
-# Files size of all calculated descriptors are too large
+# Files sizes of all calculated descriptors are too large
 /desc/peptides_2D_all.csv
 /desc/peptides_3D_v1.csv
 /desc/peptides_3D_v2.csv
@@ -6,3 +6,4 @@
 /model/input/Trans/60/
 
 *.pyc
+*.DS_Store
