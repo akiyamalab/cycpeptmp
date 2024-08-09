@@ -12,6 +12,52 @@
         "max_depth": 20
     },
     "MAT":{
-        
+        "params_N": 8,
+        "params_N_dense": 3,
+        "params_aggregation_type": "mean",
+        "params_batch_size": 64,
+        "params_d_model": 128,
+        "params_distance_matrix_kernel": "exp",
+        "params_dropout": 0,
+        "params_h": 32,
+        "params_lambda_attention": 0.1,
+        "params_lambda_distance": 0.2,
+        "params_optimizer_name": "AdamW",
+        "params_weight_decay": 5e-5
+    },
+    "SAT":{
+        "params_abs_pe_dim": 20,
+        "params_batch_norm": true,
+        "params_batch_size": 32,
+        "params_d_model": 64,
+        "params_dim_feedforward": 512,
+        "params_dropout": 0,
+        "params_global_pool": "mean",
+        "params_gnn_type": "graph",
+        "params_k_hop": 4,
+        "params_num_heads": 16,
+        "params_num_layers": 2,
+        "params_optimizer_name": "AdamW",
+        "params_weight_decay": 1e-4
+    },
+    "PharmHGT":{
+        "params_activation_name": "GELU",
+        "params_batch_size": 32,
+        "params_depth": 2,
+        "params_hid_dim": 420,
+        "params_optimizer_name": "AdamW",
+        "params_weight_decay": 1e-3
+    },
+    "FinGAT":{
+        "params_activation_name": "SiLU",
+        "params_batch_size": 32,
+        "params_global_pool": "max",
+        "params_hidden": 100,
+        "params_hidden_linear_1": 150,
+        "params_hidden_linear_2": 200,
+        "params_hidden_linear_3": 50,
+        "params_in_head": 8,
+        "params_optimizer_name": "Adam",
+        "params_weight_decay": 5e-5
     }
 }
