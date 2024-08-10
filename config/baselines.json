@@ -1,4 +1,9 @@
 {
+    "data": {
+        "seed": 2024,
+        "upper_limit": -4,
+        "lower_limit": -8
+    },
     "SVM":{
         "desc_2D": ["VSA_EState9_mordred", "density", "MolLogP", "fr_Al_OH", "logP(o/w)", "lip_violation", "h_logD"],
         "desc_3D": ["dens", "FNSA4", "RNCS", "FASA-", "FCASA+", "FASA_P", "FNSA2", "FNSA5", "vsurf_Wp2"],

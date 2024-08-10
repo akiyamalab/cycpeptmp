@@ -32,11 +32,10 @@
 ## Dataset
 - Original cyclic peptide structure (SMILES) and experimentally determined membrane permeability (_LogPexp_) used in this study (`data/CycPeptMPDB_Peptide_All.csv`) were all sourced from [**CycPeptMPDB**](http://cycpeptmpdb.com/).
   - Li J., Yanagisawa K., Sugita M., Fujie T., Ohue M., and Akiyama Y. [CycPeptMPDB: A Comprehensive Database of Membrane Permeability of Cyclic Peptides](https://pubs.acs.org/doi/10.1021/acs.jcim.2c01573), _Journal of Chemical Information and Modeling_, **63**(7): 2240–2250, 2023.
-- Correspondence table of peptides and their constituent monomers is summarized in `data/substructures_table.csv`.
-- Data used in this experiment, with duplicates removed (all: 7,451->7,337, **PAMPA: 6,941->6,889**), is summarized in `desc/peptides_used.csv`.
+- Correspondence table of peptides and their constituent monomers is summarized in `data/monomer_table.csv`.
+- Data used in this experiment, with duplicates removed (all: 7,451->7,337, **PAMPA: 6,941->6,889**), is summarized in `desc/peptide_used.csv`.
 - Dataset split index is stored in `data/eval_index/`.
-  > `*_ID.npy` shows the CycPeptMPDB peptide ID.
-  > `*_index.npy` shows the index in sorted `desc/peptides_used.csv`.
+  > `*_ID.npy` shows the CycPeptMPDB peptide ID, and `*_index.npy` shows the index in sorted `desc/peptide_used.csv`.
 
 
 

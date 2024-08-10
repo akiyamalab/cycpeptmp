@@ -1,5 +1,13 @@
 {
+    "data": {
+        "seed": 2024,
+        "upper_limit": -4,
+        "lower_limit": -8
+    },
     "model": {
+        "use_auxiliary": true,
+        "gamma_layer": 0.05,
+        "gamma_subout": 0.10,
         "number": 140,
         "params_CNN_num_conv": 6,
         "params_CNN_num_linear": 1,
@@ -28,5 +36,20 @@
         "params_dim_out": 64,
         "params_optimizer_name": "AdamW",
         "params_weight_decay": 0.1
+    },
+    "augmentation": {
+        "replica_num": 60,
+        "sme_dup_thresh": 1000
+    },
+    "conformation": {
+        "maxAttempts": 1000000,
+        "ff": "UFF",
+        "mono_conf_num": 200,
+        "mono_seed": 1370,
+        "mono_rms_thresh": 0.005
+    },
+    "descriptor": {
+        "desc_2D": ["VSA_EState9_mordred", "density", "MolLogP", "fr_Al_OH", "logP(o/w)", "lip_violation", "h_logD"],
+        "desc_3D": ["dens", "FNSA4", "RNCS", "FASA-", "FCASA+", "FASA_P", "FNSA2", "FNSA5", "vsurf_Wp2"]
     }
 }
