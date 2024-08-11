@@ -114,7 +114,7 @@ def merge_descriptors(config, desc_folder_path, data_folder_path):
         df_mordred = pd.read_csv(f'{desc_folder_path}/{mol_type}_mordred_2D.csv').select_dtypes('number')
         name_dup = []
         for _ in df_mordred.columns:
-            if _ in df_moe.columns.to_list():
+            if ((_ in df_moe.columns.to_list()) or (_ in df_rdkit.columns.to_list())):
                 name_dup.append(_)
         name_dup = dict(zip(name_dup, [_+'_mordred' for _ in name_dup]))
         df_mordred = df_mordred.rename(columns=name_dup)

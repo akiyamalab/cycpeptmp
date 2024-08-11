@@ -10,7 +10,7 @@
 
 ## About
 - Python implementation of **CycPeptMP**.
-- **CycPeptMP** is an accurate and efficient method for predicting the membrane permeability of cyclic peptides.
+- **CycPeptMP** is an accurate and efficient model for predicting the membrane permeability of cyclic peptides.
 - We designed features for cyclic peptides at the atom, monomer, and peptide levels to concurrently capture both the local sequence variations and global conformational changes in cyclic peptides. We also applied data augmentation techniques at three scales to enhance model training efficiency.
 
 ![framework](https://github.com/akiyamalab/cycpeptmp/assets/44156441/cc57f68f-dc02-486d-beb6-d6e9f2bcb1ae)

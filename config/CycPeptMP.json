@@ -2,7 +2,12 @@
     "data": {
         "seed": 2024,
         "upper_limit": -4,
-        "lower_limit": -8
+        "lower_limit": -8,
+        "max_atommun": 128,
+        "atom_pad_val": 0,
+        "mono_max_len": 16,
+        "mono_pad_id": -1,
+        "mono_pad_val": 0
     },
     "model": {
         "use_auxiliary": true,
@@ -50,6 +55,6 @@
     },
     "descriptor": {
         "desc_2D": ["VSA_EState9_mordred", "density", "MolLogP", "fr_Al_OH", "logP(o/w)", "lip_violation", "h_logD"],
-        "desc_3D": ["dens", "FNSA4", "RNCS", "FASA-", "FCASA+", "FASA_P", "FNSA2", "FNSA5", "vsurf_Wp2"]
+        "desc_3D": ["dens", "FNSA4", "RNCS", "FASA_P", "FCASA+", "FASA-", "FNSA2", "FNSA5", "vsurf_Wp2"]
     }
 }

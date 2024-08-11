@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from model import atoms_model
-from model import monomers_model
-from model import peptides_model
+from model import atom_model
+from model import monomer_model
+from model import peptide_model
 
 
 class FusionModel(nn.Module):
@@ -51,7 +51,7 @@ class FusionModel(nn.Module):
             MLP_dim_out   = 1
 
         if use_atom_model:
-            self.atoms_model = atoms_model.TransformerModel(device,
+            self.atom_model = atom_model.TransformerModel(device,
                 activation_name=Trans_activation, dropout_rate=Trans_dropout_rate,
                 n_encoders=Trans_n_encoders, head_num=Trans_head_num, model_dim=Trans_model_dim, dim_feedforward=Trans_dim_feedforward,
                 gamma_g=Trans_gamma_g, gamma_c=Trans_gamma_c,
@@ -59,14 +59,14 @@ class FusionModel(nn.Module):
                 use_auxiliary=use_auxiliary, use_3D=use_3D, visualization=visualization, classification=classification)
 
         if use_monomer_model:
-            self.monomers_model = monomers_model.ConvolutionalNeuralNetwork(device,
+            self.monomer_model = monomer_model.ConvolutionalNeuralNetwork(device,
                 cnn_type=CNN_type, num_conv=CNN_num_conv, conv_units=CNN_conv_units, padding=CNN_padding,
                 activation_name=CNN_activation_name, pooling_name=CNN_pooling_name,
                 num_linear=CNN_num_linear, linear_units=CNN_linear_units, dim_out=CNN_dim_out,
                 use_auxiliary=use_auxiliary, use_3D=use_3D, classification=classification)
 
         if use_peptide_model:
-            self.peptides_model = peptides_model.MultiLayerPerceptron(device,
+            self.peptide_model = peptide_model.MultiLayerPerceptron(device,
                 num_mlp=MLP_num_mlp, dim_mlp=MLP_dim_mlp,
                 activation_name=MLP_activation_name, dropout_rate=MLP_dropout_rate,
                 dim_linear=MLP_dim_linear, dim_out=MLP_dim_out, use_auxiliary=use_auxiliary, use_3D=use_3D, classification=classification)
@@ -135,9 +135,9 @@ class FusionModel(nn.Module):
         if self.use_auxiliary:
             if self.use_atom_model:
                 if self.visualization:
-                    auxiliary_atom, output_atom, x_attn_graph, x_attn_conf, attn_weights_graph, attn_weights_conf = self.atoms_model(x_batch_atoms)
+                    auxiliary_atom, output_atom, x_attn_graph, x_attn_conf, attn_weights_graph, attn_weights_conf = self.atom_model(x_batch_atoms)
                 else:
-                    auxiliary_atom, output_atom = self.atoms_model(x_batch_atoms)
+                    auxiliary_atom, output_atom = self.atom_model(x_batch_atoms)
                 # shape [batch_size, num_encoders] -> [batch_size, 1]
                 auxiliary_atom = auxiliary_atom.mean(dim=-1).unsqueeze(1)
                 # shape [batch_size, dim_out] -> [batch_size, 1]
@@ -146,14 +146,14 @@ class FusionModel(nn.Module):
                     auxiliary_output_atom = torch.sigmoid(auxiliary_output_atom)
 
             if self.use_monomer_model:
-                auxiliary_monomer, output_monomer = self.monomers_model(x_batch_monomers)
+                auxiliary_monomer, output_monomer = self.monomer_model(x_batch_monomers)
                 auxiliary_monomer = auxiliary_monomer.mean(dim=-1).unsqueeze(1)
                 auxiliary_output_monomer = self.linear_subout_monomers(output_monomer)
                 if self.classification:
                     auxiliary_output_monomer = torch.sigmoid(auxiliary_output_monomer)
 
             if self.use_peptide_model:
-                auxiliary_peptide, output_peptide = self.peptides_model(x_batch_peptides)
+                auxiliary_peptide, output_peptide = self.peptide_model(x_batch_peptides)
                 auxiliary_peptide = auxiliary_peptide.mean(dim=-1).unsqueeze(1)
                 auxiliary_output_peptide = self.linear_subout_peptides(output_peptide)
                 if self.classification:
@@ -162,13 +162,13 @@ class FusionModel(nn.Module):
         else:
             if self.use_atom_model:
                 if self.visualization:
-                    output_atom, x_attn_graph, x_attn_conf, attn_weights_graph, attn_weights_conf = self.atoms_model(x_batch_atoms)
+                    output_atom, x_attn_graph, x_attn_conf, attn_weights_graph, attn_weights_conf = self.atom_model(x_batch_atoms)
                 else:
-                    output_atom = self.atoms_model(x_batch_atoms)
+                    output_atom = self.atom_model(x_batch_atoms)
             if self.use_monomer_model:
-                output_monomer = self.monomers_model(x_batch_monomers)
+                output_monomer = self.monomer_model(x_batch_monomers)
             if self.use_peptide_model:
-                output_peptide = self.peptides_model(x_batch_peptides)
+                output_peptide = self.peptide_model(x_batch_peptides)
 
 
         # Directly predict permeability by three sub-models
