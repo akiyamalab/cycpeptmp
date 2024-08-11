@@ -9,20 +9,24 @@ from utils import utils_function
 # MONO_PAD_VAL = 0
 
 
-def generate_initial_sequence_number(config, df_seq, df_mono_2D):
+def generate_initial_sequence_number(df, df_mono_2D, MONO_PAD_ID, MONO_MAX_LEN):
     """
     Generate monomer ID sequence.
     """
-    SMILES_to_ID = dict(zip([utils_function.canonicalize_smiles(smi) for smi in df_mono_2D['SMILES'].to_list()], df_mono_2D['ID']))
-    sequence = df_seq.filter(regex='Substructure-\d+', axis=1).values
+    # SMILES_to_ID = dict(zip([utils_function.canonicalize_smiles(smi) for smi in df_mono_2D['SMILES'].to_list()], df_mono_2D['ID']))
+    SMILES_to_index = dict(zip([utils_function.canonicalize_smiles(smi) for smi in df_mono_2D['SMILES'].to_list()], list(range(1, len(df_mono_2D)+1))))
+    sequence = df.filter(regex='Substructure-\d+', axis=1).values
 
-    # Monomer ID sequence
-    sequence_number = [[SMILES_to_ID[j] if j in SMILES_to_ID else config['data']['mono_pad_id'] for j in i] for i in sequence]
+    # # Monomer ID sequence
+    # # WARNING: Use sequence ID need full ID list (1 start)
+    # sequence_number = [[SMILES_to_ID[j] if j in SMILES_to_ID else MONO_PAD_ID for j in i] for i in sequence]
+    # Monomer index sequence
+    sequence_number = [[SMILES_to_index[j] if j in SMILES_to_index else MONO_PAD_ID for j in i] for i in sequence]
 
     # Align the part with information in the middle
-    sequence_number = [[config['data']['mono_pad_id']]*int(np.trunc((config['data']['mono_max_len']-now_len)/2)) + \
+    sequence_number = [[MONO_PAD_ID]*int(np.trunc((MONO_MAX_LEN-now_len)/2)) + \
                        now_seq[:now_len] + \
-                       [config['data']['mono_pad_id']]*int(np.ceil((config['data']['mono_max_len']-now_len)/2)) \
+                       [MONO_PAD_ID]*int(np.ceil((MONO_MAX_LEN-now_len)/2)) \
                        for now_seq, now_len in zip(sequence_number, np.sum(~pd.isna(sequence), axis=1))]
 
     return np.array(sequence_number)
@@ -30,7 +34,7 @@ def generate_initial_sequence_number(config, df_seq, df_mono_2D):
 
 
 
-def perform_augmentation(sequence_number, MONO_MAX_LEN, MONO_PAD_ID):
+def perform_augmentation(sequence_number, MONO_PAD_ID, MONO_MAX_LEN):
     """
     Sequence-based monomer-level augmentation.
     """
@@ -65,13 +69,14 @@ def perform_augmentation(sequence_number, MONO_MAX_LEN, MONO_PAD_ID):
 
 
 
-def generate_feature_map(sequence_number, monomer_descriptors, MONO_PAD_VAL, MONO_PAD_ID):
+def generate_feature_map(sequence_number, monomer_descriptors, MONO_PAD_ID, MONO_PAD_VAL):
     """
     Generate feature_map from sequence_number & monomer_descriptors
     """
     pad = [MONO_PAD_VAL] * monomer_descriptors.shape[1]
     feature_map = []
     for i in range(len(sequence_number)):
+        # NOTE: ID starts from 1
         feature_map_now = [pad if _ == MONO_PAD_ID else monomer_descriptors[_-1].tolist() for _ in sequence_number[i]]
         feature_map.append(feature_map_now)
     feature_map = np.array(feature_map).transpose(0,2,1)
@@ -81,22 +86,93 @@ def generate_feature_map(sequence_number, monomer_descriptors, MONO_PAD_VAL, MON
 
 
 
-def generate_monomer_input(config, df_seq, df_mono_2D, df_mono_3D):
+def generate_monomer_input(config, df, df_mono_2D, df_mono_3D, folder_path, set_name):
     """
     Generate monomer input (monomer descriptors map).
     """
-    sequence_number = generate_initial_sequence_number(config, df_seq, df_mono_2D)
+    MONO_MAX_LEN = config['data']['mono_max_len']
+    MONO_PAD_ID = config['data']['mono_pad_id']
+    MONO_PAD_VAL = config['data']['mono_pad_val']
+    REPLICA_NUM = config['augmentation']['replica_num']
+
+    y = df['permeability'].to_numpy()
+    y = np.clip(y, config['data']['lower_limit'], config['data']['upper_limit']).repeat(REPLICA_NUM)
+
+    sequence_number = generate_initial_sequence_number(df, df_mono_2D, MONO_PAD_ID, MONO_MAX_LEN)
 
     # Augmentation
-    aug_sequence_number, aug_sequence_length, aug_peptide_ID = perform_augmentation(sequence_number, config['data']['mono_max_len'], config['data']['mono_pad_id'])
+    # NOTE: The number of generated replicas is  mono_len * (mono_max_len - mono_len + 1)
+    aug_sequence_number, aug_sequence_length, aug_peptide_ID = perform_augmentation(sequence_number, MONO_PAD_ID, MONO_MAX_LEN)
 
     # Monomer descriptor types
     use_descriptors = config['descriptor']['desc_2D'] + config['descriptor']['desc_3D']
 
+    # Standardize monomer descriptors by Z-score
+    df_mono = pd.concat([df_mono_2D.iloc[sum([[_]*REPLICA_NUM for _ in range(len(df_mono_2D))], [])].reset_index(drop=True), df_mono_3D], axis=1)
+    desc_preprocessing = df_mono[use_descriptors].copy()
+    mono_desc_mean = config['descriptor']['mono_desc_mean']
+    mono_desc_std = config['descriptor']['mono_desc_std']
+    for desc in desc_preprocessing:
+        desc_preprocessing[desc] = (desc_preprocessing[desc] - mono_desc_mean[desc]) / mono_desc_std[desc]
+
+    # Assign each conformer of the monomer index from 0 to replica_num-1.
+    desc_preprocessing['replica_index'] = sum([[_ for _ in range(REPLICA_NUM)]*len(df_mono_2D)], [])
+    desc_preprocessing.index = df_mono_3D['ID']
 
 
+    # Select replica_num replicas for each peptide
+    df_feature_map = pd.DataFrame(aug_peptide_ID, columns=['aug_peptide_ID'])
+    df_feature_map['aug_sequence_number'] = aug_sequence_number
+    aug_peptide_ID_now, aug_sequence_number_now = [], []
+
+    for id in df['ID'].to_list():
+        tmp = df_feature_map[df_feature_map['aug_peptide_ID'] == id].copy()
+        # NOTE: If there are more than replica_num replicas, randomly select replicas
+        if len(tmp) >= REPLICA_NUM:
+            tmp = tmp.sample(n=REPLICA_NUM, random_state=REPLICA_NUM)
+        # NOTE: If there are fewer than replica_num replicas, select replicas allowing duplicates
+        else:
+            tmp = pd.concat([tmp, tmp.sample(n=REPLICA_NUM-len(tmp), random_state=3920, replace=True)], axis=0)
+
+        aug_peptide_ID_now.extend(tmp['aug_peptide_ID'].to_list())
+        aug_sequence_number_now.extend(tmp['aug_sequence_number'].to_list())
+
+    tmp = pd.DataFrame(aug_peptide_ID_now, columns=['aug_peptide_ID'])
+    tmp['aug_sequence_number'] = aug_sequence_number_now
+    tmp['replica_index'] = sum([[_ for _ in range(REPLICA_NUM)]*len(df)], [])
 
 
-    # feature_map = generate_feature_map(sequence_number, monomer_descriptors, config['data']['mono_pad_val'], config['data']['mono_pad_id')
+    # Generate feature map.
+    feature_map = {}
+    for i in range(REPLICA_NUM):
+        # IMPORTANT: Using 3D descriptors calculated from different conformations
+        feature_map[i] = generate_feature_map(tmp[tmp['replica_index']==i]['aug_sequence_number'].to_list(), \
+                                              desc_preprocessing[desc_preprocessing['replica_index']==i][use_descriptors].values, \
+                                              MONO_PAD_ID, MONO_PAD_VAL)
+    feature_map_now = []
+    # 0 ~ REPLICA_NUM-1
+    for i in range(len(df)):
+        # 0 ~ data_num-1
+        for j in range(REPLICA_NUM):
+            feature_map_now.append(feature_map[j][i])
+    feature_map_now = np.array(feature_map_now)
 
-    # return aug_sequence_number, aug_sequence_length, aug_peptide_ID, feature_map
+    np.savez_compressed(f'{folder_path}/CNN/{REPLICA_NUM}/feature_map_{REPLICA_NUM}_{set_name}.npz',
+                        id=np.array(aug_peptide_ID_now),
+                        table=np.array(aug_sequence_number_now),
+                        feature_map=feature_map_now,
+                        y=y)
+
+
+    # # NOTE: You can also generate input data for different augmentation times
+    # # For example:
+    # total_list = list(range(0, len(aug_peptide_ID_now)))
+    # for replica_num in [1, 5, 10, 20, 30, 40, 50]:
+    #     # IMPORTANT
+    #     select_list = [total_list[i:i+replica_num] for i in range(0, len(total_list), REPLICA_NUM)]
+    #     select_list = sum(select_list, [])
+    #     np.savez_compressed(f'{folder_path}/CNN/{replica_num}/feature_map_{replica_num}_{set_name}.npz',
+    #                         id=np.array(aug_peptide_ID_now),
+    #                         table=np.array(aug_sequence_number_now)[select_list],
+    #                         feature_map=feature_map_now[select_list],
+    #                         y=y[select_list])

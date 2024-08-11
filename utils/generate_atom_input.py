@@ -188,3 +188,57 @@ def calculate_bond_type_matrix(mols, MAX_ATOMNUM):
         bond_types.append(matrix)
 
     return np.array(bond_types)
+
+
+
+
+def generate_atom_input(config, df, df_enu, mols, folder_path, set_name):
+    """
+    Generate atom input.
+    """
+    MAX_ATOMNUM = config['data']['max_atommun']
+    ATOM_PAD_VAL = config['data']['atom_pad_val']
+    REPLICA_NUM = config['augmentation']['replica_num']
+
+    # Peptide information
+    id = df_enu['ID'].to_numpy()
+    smiles = df_enu['SMILES'].to_numpy()
+    y = df['permeability'].to_numpy()
+    y = np.clip(y, config['data']['lower_limit'], config['data']['upper_limit']).repeat(REPLICA_NUM)
+
+    # Atoms mask
+    atoms_mask = get_atoms_mask(mols, MAX_ATOMNUM)
+    # Atoms features (Node)
+    atoms_features = calculate_atoms_features(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
+    # Bonds type (Bond)
+    bond = calculate_bond_type_matrix(mols, MAX_ATOMNUM)
+    # Graph distance matrix (Graph)
+    graph = calculate_graph_distance_matrix(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
+    # 3D distance matrix (Conf)
+    conf = calculate_conf_distance_matrix(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
+
+
+    np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/node_{REPLICA_NUM}_{set_name}.npz",
+                        id=id,
+                        smiles=smiles,
+                        y=y,
+                        atoms_mask=atoms_mask,
+                        atoms_features=atoms_features)
+    np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/bond_{REPLICA_NUM}_{set_name}.npz", bond=bond)
+    np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/graph_{REPLICA_NUM}_{set_name}.npz", graph=graph)
+    np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/conf_{REPLICA_NUM}_{set_name}.npz", conf=conf)
+
+
+    # # NOTE: You can also generate input data for different augmentation times
+    # # For example:
+    # total_list = list(range(0, len(df_enu)))
+    # for replica_num in [1, 5, 10, 20, 30, 40, 50]:
+    #     # IMPORTANT
+    #     select_list = [total_list[i:i+replica_num] for i in range(0, len(total_list), 60)]
+    #     select_list = sum(select_list, [])
+    #     np.savez_compressed(f"{folder_path}/Trans/{replica_num}/node_{replica_num}_{set_name}.npz"
+    #                         id=id[select_list],
+    #                         smiles=smiles[select_list],
+    #                         y=y[select_list],
+    #                         atoms_mask=atoms_mask[select_list],
+    #                         atoms_features=atoms_features[select_list])

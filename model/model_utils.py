@@ -28,24 +28,24 @@ class DataSet:
 
 
 
-def load_dataset(model_type, replica_num, index_name, _10cv=False):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    input_path = os.path.join(current_dir, 'input')
+def load_dataset(folder_path, model_type, replica_num, set_name, _10cv=False):
+    # current_dir = os.path.dirname(os.path.abspath(__file__))
+    # folder_path = os.path.join(current_dir, 'input')
 
     if _10cv: # For 10 cv
-        load_node = np.load(f'{input_path}/Trans/{replica_num}/10cv/node_{replica_num}_{index_name}.npz')
-        load_graph = np.load(f'{input_path}/Trans/{replica_num}/10cv/graph_{replica_num}_{index_name}.npz')
-        load_conf = np.load(f'{input_path}/Trans/{replica_num}/10cv/conf_{replica_num}_{index_name}.npz')
-        load_bond = np.load(f'{input_path}/Trans/{replica_num}/10cv/bond_{replica_num}_{index_name}.npz')
-        load_monomers = np.load(f'{input_path}/CNN/{replica_num}/10cv/feature_map_{replica_num}_{index_name}.npz')
-        load_peptides = np.load(f'{input_path}/MLP/{replica_num}/10cv/peptide_{replica_num}_{index_name}.npz')
+        load_node = np.load(f'{folder_path}/Trans/{replica_num}/10cv/node_{replica_num}_{set_name}.npz')
+        load_graph = np.load(f'{folder_path}/Trans/{replica_num}/10cv/graph_{replica_num}_{set_name}.npz')
+        load_conf = np.load(f'{folder_path}/Trans/{replica_num}/10cv/conf_{replica_num}_{set_name}.npz')
+        load_bond = np.load(f'{folder_path}/Trans/{replica_num}/10cv/bond_{replica_num}_{set_name}.npz')
+        load_monomers = np.load(f'{folder_path}/CNN/{replica_num}/10cv/feature_map_{replica_num}_{set_name}.npz')
+        load_peptides = np.load(f'{folder_path}/MLP/{replica_num}/10cv/peptide_{replica_num}_{set_name}.npz')
     else: # For test set
-        load_node = np.load(f'{input_path}/Trans/{replica_num}/node_{replica_num}_{index_name}.npz')
-        load_graph = np.load(f'{input_path}/Trans/{replica_num}/graph_{replica_num}_{index_name}.npz')
-        load_conf = np.load(f'{input_path}/Trans/{replica_num}/conf_{replica_num}_{index_name}.npz')
-        load_bond = np.load(f'{input_path}/Trans/{replica_num}/bond_{replica_num}_{index_name}.npz')
-        load_monomers = np.load(f'{input_path}/CNN/{replica_num}/feature_map_{replica_num}_{index_name}.npz')
-        load_peptides = np.load(f'{input_path}/MLP/{replica_num}/peptide_{replica_num}_{index_name}.npz')
+        load_node = np.load(f'{folder_path}/Trans/{replica_num}/node_{replica_num}_{set_name}.npz')
+        load_graph = np.load(f'{folder_path}/Trans/{replica_num}/graph_{replica_num}_{set_name}.npz')
+        load_conf = np.load(f'{folder_path}/Trans/{replica_num}/conf_{replica_num}_{set_name}.npz')
+        load_bond = np.load(f'{folder_path}/Trans/{replica_num}/bond_{replica_num}_{set_name}.npz')
+        load_monomers = np.load(f'{folder_path}/CNN/{replica_num}/feature_map_{replica_num}_{set_name}.npz')
+        load_peptides = np.load(f'{folder_path}/MLP/{replica_num}/peptide_{replica_num}_{set_name}.npz')
 
     if model_type == 'Trans':
         dataset_now = DataSet(list(zip(torch.Tensor(load_peptides['id'].reshape(-1,1)).to(torch.int32),
@@ -517,26 +517,27 @@ def evaluate_model(X, Y, round_num=3, classification=False, preds_probs=None):
 
 
 
-def load_dataset_cv(model_type, replica_num, cv):
+
+def load_dataset_cv(folder_path, model_type, replica_num, cv):
     """
     Rearrange input data for different trials of cross-validation.
     TODO: There is a lot of room for improvement.
     """
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    input_path = os.path.join(current_dir, 'input')
+    # current_dir = os.path.dirname(os.path.abspath(__file__))
+    # folder_path = os.path.join(current_dir, 'input')
 
-    load_node_train = np.load(f'{input_path}/Trans/{replica_num}/node_{replica_num}_Train.npz')
-    load_node_valid = np.load(f'{input_path}/Trans/{replica_num}/node_{replica_num}_Valid.npz')
-    load_graph_train = np.load(f'{input_path}/Trans/{replica_num}/graph_{replica_num}_Train.npz')
-    load_graph_valid = np.load(f'{input_path}/Trans/{replica_num}/graph_{replica_num}_Valid.npz')
-    load_conf_train = np.load(f'{input_path}/Trans/{replica_num}/conf_{replica_num}_Train.npz')
-    load_conf_valid = np.load(f'{input_path}/Trans/{replica_num}/conf_{replica_num}_Valid.npz')
-    load_bond_train = np.load(f'{input_path}/Trans/{replica_num}/bond_{replica_num}_Train.npz')
-    load_bond_valid = np.load(f'{input_path}/Trans/{replica_num}/bond_{replica_num}_Valid.npz')
-    load_monomers_train = np.load(f'{input_path}/CNN/{replica_num}/feature_map_{replica_num}_Train.npz')
-    load_monomers_valid = np.load(f'{input_path}/CNN/{replica_num}/feature_map_{replica_num}_Valid.npz')
-    load_peptides_train = np.load(f'{input_path}/MLP/{replica_num}/peptide_{replica_num}_Train.npz')
-    load_peptides_valid = np.load(f'{input_path}/MLP/{replica_num}/peptide_{replica_num}_Valid.npz')
+    load_node_train = np.load(f'{folder_path}/Trans/{replica_num}/node_{replica_num}_Train.npz')
+    load_node_valid = np.load(f'{folder_path}/Trans/{replica_num}/node_{replica_num}_Valid.npz')
+    load_graph_train = np.load(f'{folder_path}/Trans/{replica_num}/graph_{replica_num}_Train.npz')
+    load_graph_valid = np.load(f'{folder_path}/Trans/{replica_num}/graph_{replica_num}_Valid.npz')
+    load_conf_train = np.load(f'{folder_path}/Trans/{replica_num}/conf_{replica_num}_Train.npz')
+    load_conf_valid = np.load(f'{folder_path}/Trans/{replica_num}/conf_{replica_num}_Valid.npz')
+    load_bond_train = np.load(f'{folder_path}/Trans/{replica_num}/bond_{replica_num}_Train.npz')
+    load_bond_valid = np.load(f'{folder_path}/Trans/{replica_num}/bond_{replica_num}_Valid.npz')
+    load_monomers_train = np.load(f'{folder_path}/CNN/{replica_num}/feature_map_{replica_num}_Train.npz')
+    load_monomers_valid = np.load(f'{folder_path}/CNN/{replica_num}/feature_map_{replica_num}_Valid.npz')
+    load_peptides_train = np.load(f'{folder_path}/MLP/{replica_num}/peptide_{replica_num}_Train.npz')
+    load_peptides_valid = np.load(f'{folder_path}/MLP/{replica_num}/peptide_{replica_num}_Valid.npz')
 
 
     train_ids = np.load(f'data/eval_index/train_ids_cv{cv}.npy')

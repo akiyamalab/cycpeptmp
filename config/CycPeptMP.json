@@ -55,6 +55,81 @@
     },
     "descriptor": {
         "desc_2D": ["VSA_EState9_mordred", "density", "MolLogP", "fr_Al_OH", "logP(o/w)", "lip_violation", "h_logD"],
-        "desc_3D": ["dens", "FNSA4", "RNCS", "FASA_P", "FCASA+", "FASA-", "FNSA2", "FNSA5", "vsurf_Wp2"]
+        "desc_3D": ["dens", "FNSA4", "RNCS", "FASA_P", "FCASA+", "FASA-", "FNSA2", "FNSA5", "vsurf_Wp2"],
+        "mono_desc_mean": {
+            "VSA_EState9_mordred": 2.650431,
+            "density": 0.699281,
+            "MolLogP": 0.963215,
+            "fr_Al_OH": 0.080103,
+            "logP(o/w)": 1.438767,
+            "lip_violation": 0.289406,
+            "h_logD": 0.906507,
+            "dens": 0.946558,
+            "FNSA4": -0.032725,
+            "RNCS": 86.251509,
+            "FASA_P": 0.256408,
+            "FCASA+": 3.241631,
+            "FASA-": 0.248967,
+            "FNSA2": -1.417793,
+            "FNSA5": -0.112139,
+            "vsurf_Wp2": 290.759453
+        },
+        "mono_desc_std": {
+            "VSA_EState9_mordred": 1.330887,
+            "density": 0.056385,
+            "MolLogP": 1.150106,
+            "fr_Al_OH": 0.298655,
+            "logP(o/w)": 1.406433,
+            "lip_violation": 0.696233,
+            "h_logD": 1.972028,
+            "dens": 0.073438,
+            "FNSA4": 0.006336,
+            "RNCS": 76.219818,
+            "FASA_P": 0.090385,
+            "FCASA+": 2.366088,
+            "FASA-": 0.067128,
+            "FNSA2": 1.049170,
+            "FNSA5": 0.023958,
+            "vsurf_Wp2": 167.468353
+        },
+        "pep_desc_mean": {
+            "VSA_EState9_mordred": 3.683848,
+            "density": 0.714405,
+            "MolLogP": 2.871691,
+            "fr_Al_OH": 0.178411,
+            "logP(o/w)": 4.394455,
+            "lip_violation": 2.139975,
+            "h_logD": 6.564043,
+            "dens": 0.979703,
+            "FNSA4": -0.036436,
+            "RNCS": 196.432971,
+            "FASA_P": 0.241987,
+            "FCASA+": 9.711499,
+            "FASA-": 0.301280,
+            "FNSA2": -5.104290,
+            "FNSA5": -0.119190,
+            "vsurf_Wp2": 684.261047
+        },
+        "pep_desc_std": {
+            "VSA_EState9_mordred": 2.853416,
+            "density": 0.010471,
+            "MolLogP": 1.044015,
+            "fr_Al_OH": 0.406681,
+            "logP(o/w)": 1.220228,
+            "lip_violation": 0.459220,
+            "h_logD": 1.829503,
+            "dens": 0.016399,
+            "FNSA4": 0.003998,
+            "RNCS": 262.588297,
+            "FASA_P": 0.057949,
+            "FCASA+": 3.174744,
+            "FASA-": 0.050271,
+            "FNSA2": 1.119356,
+            "FNSA5": 0.011552,
+            "vsurf_Wp2": 163.959739
+        }
+    },
+    "fingerprint": {
+        "bit_num": 1024
     }
 }
