@@ -38,7 +38,7 @@ def generate_peptide_input(config, df, df_enu, df_pep_2D, df_pep_3D, folder_path
     fps_r2 = calculate_descriptors.calc_fingerprint(df['SMILES'].tolist(), 2, config['fingerprint']['bit_num'])
     fps_r3 = calculate_descriptors.calc_fingerprint(df['SMILES'].tolist(), 3, config['fingerprint']['bit_num'])
     fps = np.hstack([fps_r2, fps_r3])
-    fps = fps.repeat(REPLICA_NUM)
+    fps = fps.repeat(REPLICA_NUM, axis=0)
 
 
     np.savez_compressed(f'{folder_path}/MLP/{REPLICA_NUM}/peptide_{REPLICA_NUM}_{set_name}.npz',
