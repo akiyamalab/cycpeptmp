@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 
@@ -94,6 +95,8 @@ def generate_monomer_input(config, df, df_mono_2D, df_mono_3D, folder_path, set_
     MONO_PAD_ID = config['data']['mono_pad_id']
     MONO_PAD_VAL = config['data']['mono_pad_val']
     REPLICA_NUM = config['augmentation']['replica_num']
+
+    os.makedirs(f"{folder_path}/CNN/{REPLICA_NUM}/", exist_ok=False)
 
     y = df['permeability'].to_numpy()
     y = np.clip(y, config['data']['lower_limit'], config['data']['upper_limit']).repeat(REPLICA_NUM)

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from tqdm import tqdm
 from rdkit import Chem
@@ -200,6 +201,8 @@ def generate_atom_input(config, df, df_enu, mols, folder_path, set_name):
     ATOM_PAD_VAL = config['data']['atom_pad_val']
     REPLICA_NUM = config['augmentation']['replica_num']
 
+    os.makedirs(f"{folder_path}/Trans/{REPLICA_NUM}/", exist_ok=False)
+
     # Peptide information
     id = df_enu['ID'].to_numpy()
     smiles = df_enu['SMILES'].to_numpy()
@@ -210,22 +213,23 @@ def generate_atom_input(config, df, df_enu, mols, folder_path, set_name):
     atoms_mask = get_atoms_mask(mols, MAX_ATOMNUM)
     # Atoms features (Node)
     atoms_features = calculate_atoms_features(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
-    # Bonds type (Bond)
-    bond = calculate_bond_type_matrix(mols, MAX_ATOMNUM)
-    # Graph distance matrix (Graph)
-    graph = calculate_graph_distance_matrix(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
-    # 3D distance matrix (Conf)
-    conf = calculate_conf_distance_matrix(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
-
-
     np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/node_{REPLICA_NUM}_{set_name}.npz",
                         id=id,
                         smiles=smiles,
                         y=y,
                         atoms_mask=atoms_mask,
                         atoms_features=atoms_features)
+
+    # Bonds type (Bond)
+    bond = calculate_bond_type_matrix(mols, MAX_ATOMNUM)
     np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/bond_{REPLICA_NUM}_{set_name}.npz", bond=bond)
+
+    # Graph distance matrix (Graph)
+    graph = calculate_graph_distance_matrix(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
     np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/graph_{REPLICA_NUM}_{set_name}.npz", graph=graph)
+
+    # 3D distance matrix (Conf)
+    conf = calculate_conf_distance_matrix(mols, MAX_ATOMNUM, ATOM_PAD_VAL)
     np.savez_compressed(f"{folder_path}/Trans/{REPLICA_NUM}/conf_{REPLICA_NUM}_{set_name}.npz", conf=conf)
 
 

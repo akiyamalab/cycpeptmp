@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 
@@ -11,6 +12,8 @@ def generate_peptide_input(config, df, df_enu, df_pep_2D, df_pep_3D, folder_path
     """
     REPLICA_NUM = config['augmentation']['replica_num']
     use_descriptors = config['descriptor']['desc_2D'] + config['descriptor']['desc_3D']
+
+    os.makedirs(f"{folder_path}/MLP/{REPLICA_NUM}/", exist_ok=False)
 
     # Peptide information
     id = df_enu['ID'].to_numpy()
