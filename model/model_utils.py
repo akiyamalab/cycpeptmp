@@ -149,6 +149,26 @@ def create_model(best_trial, device, use_auxiliary):
 
 
 
+def create_optimizer(best_trial, model):
+    """
+    Create optimizer with hyperparameters determined by Optuna.
+    """
+    optimizer_name = best_trial['params_optimizer_name']
+    weight_decay = float(best_trial['params_weight_decay'])
+    # lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01,
+    if optimizer_name == 'AdamW':
+        optimizer = torch.optim.AdamW(model.parameters(), weight_decay=weight_decay)
+    # lr=0.002, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, momentum_decay=0.004, *, foreach=None, differentiable=False
+    elif optimizer_name == 'NAdam':
+        optimizer = torch.optim.NAdam(model.parameters(), weight_decay=weight_decay)
+    # lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, *, foreach=None, differentiable=False
+    elif optimizer_name == 'RAdam':
+        optimizer = torch.optim.RAdam(model.parameters(), weight_decay=weight_decay)
+
+    return optimizer
+
+
+
 
 class EarlyStopping:
     """

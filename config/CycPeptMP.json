@@ -10,6 +10,8 @@
         "mono_pad_val": 0
     },
     "model": {
+        "epoch_num": 50,
+        "patience": 5,
         "use_auxiliary": true,
         "gamma_layer": 0.05,
         "gamma_subout": 0.10,
