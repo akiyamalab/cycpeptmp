@@ -3,6 +3,7 @@ import numpy as np
 import torch
 import time
 import random
+import json
 import torch
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, matthews_corrcoef
@@ -10,8 +11,12 @@ from scipy.stats import pearsonr
 
 from model import fusion_model
 
-UPPER_LIMIT = -4
-LOWER_LIMIT = -8
+
+config_path = 'config/CycPeptMP.json'
+config = json.load(open(config_path,'r'))
+UPPER_LIMIT = config['data']['upper_limit']
+LOWER_LIMIT = config['data']['lower_limit']
+
 
 
 

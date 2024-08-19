@@ -1,11 +1,16 @@
+import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
-SUB_MAX_LEN = 16
-SUB_PAD_ID = -1
-SUB_PAD_VAL = 0
+config_path = 'config/CycPeptMP.json'
+config = json.load(open(config_path,'r'))
+SUB_MAX_LEN = config['data']['mono_max_len']
+SUB_PAD_ID = config['data']['mono_pad_id']
+SUB_PAD_VAL = config['data']['mono_pad_val']
+NUM_DESC = len(config['descriptor']['desc_2D'])+len(config['descriptor']['desc_3D'])
+NUM_DESC_2D = len(config['descriptor']['desc_2D'])
 
 
 class ConvolutionalNeuralNetwork(nn.Module):
@@ -32,9 +37,9 @@ class ConvolutionalNeuralNetwork(nn.Module):
         self.classification = classification
 
         if use_3D:
-            self.NUM_DESC = 16
+            self.NUM_DESC = NUM_DESC
         else:
-            self.NUM_DESC = 7
+            self.NUM_DESC = NUM_DESC_2D
 
         # Convolutional layers
         self.conv_layers = nn.Sequential()

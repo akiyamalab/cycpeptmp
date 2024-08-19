@@ -1,12 +1,16 @@
+import json
 import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
-MAX_ATOMNUM = 128
-ATOM_PAD_VAL= 0
-ATOMS_FEATURES_NUM = 30
+config_path = 'config/CycPeptMP.json'
+config = json.load(open(config_path,'r'))
+MAX_ATOMNUM = config['data']['max_atommun']
+ATOM_PAD_VAL = config['data']['atom_pad_val']
+ATOM_FEATURE_NUM = config['descriptor']['atom_feature_num']
+
 
 
 class PositionalEncoding(nn.Module):
@@ -139,7 +143,7 @@ class TransformerModel(nn.Module):
         self.dropout = nn.Dropout(dropout_rate)
 
         # Embedding layers
-        self.embedding_atoms = nn.Linear(ATOMS_FEATURES_NUM, model_dim)
+        self.embedding_atoms = nn.Linear(ATOM_FEATURE_NUM, model_dim)
         if use_2D: # graph matrix
             self.embedding_graph = nn.Linear(MAX_ATOMNUM, model_dim)
         if use_3D: # conf matrix
@@ -217,7 +221,7 @@ class TransformerModel(nn.Module):
         Args:
             x_batch:
                 atoms_mask: mask for atoms, shape [batch_size, MAX_ATOMNUM]
-                atoms_features: node features, shape [batch_size, MAX_ATOMNUM, ATOMS_FEATURES_NUM]
+                atoms_features: node features, shape [batch_size, MAX_ATOMNUM, ATOM_FEATURE_NUM]
                 graph: distance calculated from graph representation, shape [batch_size, MAX_ATOMNUM, MAX_ATOMNUM]
                 conf: euclidean distance calculated from 3D conformation, shape [batch_size, MAX_ATOMNUM, MAX_ATOMNUM]
                 bond: bond type, Single(1.0), Double(2.0), Triple(3.0), Aromatic(1.5), Conjugated(1.4) and No-bond(0), shape [batch_size, MAX_ATOMNUM, MAX_ATOMNUM]

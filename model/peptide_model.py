@@ -1,8 +1,15 @@
+import json
 import torch
 import torch.nn as nn
 
 
-NUM_FP = 1024*2
+config_path = 'config/CycPeptMP.json'
+config = json.load(open(config_path,'r'))
+NUM_FP = config['fingerprint']['bit_num'] * 2
+NUM_DESC = len(config['descriptor']['desc_2D'])+len(config['descriptor']['desc_3D'])
+NUM_DESC_2D = len(config['descriptor']['desc_2D'])
+
+
 
 class MultiLayerPerceptron(nn.Module):
     """
@@ -27,9 +34,9 @@ class MultiLayerPerceptron(nn.Module):
         self.classification = classification
 
         if use_3D:
-            self.NUM_DESC = 16
+            self.NUM_DESC = NUM_DESC
         else:
-            self.NUM_DESC = 7
+            self.NUM_DESC = NUM_DESC_2D
 
         if activation_name == 'ReLU':
             self.activation = nn.ReLU()

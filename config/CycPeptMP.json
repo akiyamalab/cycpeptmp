@@ -56,6 +56,7 @@
         "mono_rms_thresh": 0.005
     },
     "descriptor": {
+        "atom_feature_num": 30,
         "desc_2D": ["VSA_EState9_mordred", "density", "MolLogP", "fr_Al_OH", "logP(o/w)", "lip_violation", "h_logD"],
         "desc_3D": ["dens", "FNSA4", "RNCS", "FASA_P", "FCASA+", "FASA-", "FNSA2", "FNSA5", "vsurf_Wp2"],
         "mono_desc_mean": {
