@@ -204,3 +204,44 @@ def entire_preprocessing(x, y, threshold=0.9):
 
     print(f'Feature map shape: {data_preprocessed.shape}')
     return features_delete_std, features_delete_R, data_preprocessed
+
+
+
+
+def creat_internal_testset(x_variables, k):
+    """""
+    Creat testset by Kennard-Stone algorithm.
+    𝑂(n_sample * n_result)
+    """""
+
+    x_variables = np.array(x_variables)
+    original_x = x_variables
+    # 1. Calculate the sample mean for the variables.
+    distance_to_average = ((x_variables - np.tile(x_variables.mean(axis=0), (x_variables.shape[0], 1))) ** 2).sum(axis=1)
+    # 2. Select the sample with the largest Euclidean distance to the mean.
+    max_distance_sample_number = np.where(distance_to_average == np.max(distance_to_average))
+    max_distance_sample_number = max_distance_sample_number[0][0]
+    selected_sample_numbers = list()
+    selected_sample_numbers.append(max_distance_sample_number)
+    remaining_sample_numbers = np.arange(0, x_variables.shape[0], 1)
+    x_variables = np.delete(x_variables, selected_sample_numbers, 0)
+    remaining_sample_numbers = np.delete(remaining_sample_numbers, selected_sample_numbers, 0)
+    # 6. Repeat steps 3 to 5.
+    for iteration in range(1, k):
+        selected_samples = original_x[selected_sample_numbers, :]
+        min_distance_to_selected_samples = list()
+        # 3. For each sample that has not yet been selected, calculate the Euclidean distance between it and all samples that have been selected.
+        # 4. The minimum distance of 3 is taken as the representative distance of each sample.
+        for min_distance_calculation_number in range(0, x_variables.shape[0]):
+            distance_to_selected_samples = ((selected_samples - np.tile(x_variables[min_distance_calculation_number, :],
+                                                                        (selected_samples.shape[0], 1))) ** 2).sum(axis=1)
+            min_distance_to_selected_samples.append(np.min(distance_to_selected_samples))
+        # 5. Select the sample with the largest representative distance.
+        max_distance_sample_number = np.where(
+            min_distance_to_selected_samples == np.max(min_distance_to_selected_samples))
+        max_distance_sample_number = max_distance_sample_number[0][0]
+        selected_sample_numbers.append(remaining_sample_numbers[max_distance_sample_number])
+        x_variables = np.delete(x_variables, max_distance_sample_number, 0)
+        remaining_sample_numbers = np.delete(remaining_sample_numbers, max_distance_sample_number, 0)
+
+    return selected_sample_numbers, remaining_sample_numbers
