@@ -3,9 +3,9 @@
 /desc/peptide_3D_v1.csv
 /desc/peptide_3D_v2.csv
 
+# File size of atom model input is too large
 /model/input/Trans/60/
 
 /sdf
 
-*.pyc
-.DS_Store
+memo.py
