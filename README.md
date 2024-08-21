@@ -43,7 +43,7 @@
 ## Code
 - `Testset.ipynb`
   > Prediction for the test set (and other assay data) shown in the paper by CycPeptMP and other baselines.
-  > Please download complete input files `model/input/Trans/60/` from `hogehoge`.
+  > Please download complete input files `model/input/Trans/60/` from [Google Drive](https://drive.google.com/drive/folders/1BkkR2skuedOmiu87N6LMWHQhvBRyGklc?usp=sharing).
 
 - `Newdata.ipynb`
   > Prediction for new data.
