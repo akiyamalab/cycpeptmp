@@ -40,6 +40,14 @@
 
 
 
+## Input files
+- Since the input file size is large, the input files for the train set and validation set have not been uploaded.
+- Preparing to upload the complete input files to Zenodo (April 2025).
+
+
+
+
+
 ## Code
 - `Testset.ipynb`
   > Prediction for the test set (and other assay data) shown in the paper by CycPeptMP and other baselines.
