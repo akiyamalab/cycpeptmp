@@ -48,10 +48,14 @@
 - `Newdata.ipynb`
   > Prediction for new data.
 
+- `Train.ipynb`
+  > Re-searching hyperparameters/training models.
+  > Please refer to the process of `Newdata.ipynb` for the generation of input files.
 
 
 
-## Pretrained weights
+
+## Pre-trained weights
 - Weights of CycPeptMP (60 times augmentation) for three validation runs (`Fusion-60_cv*.cpt`).
 - Weights of fusion model with no augmentation (`Fusion-1_cv*.cpt`) and 20 times augmentation (`Fusion-20_cv*.cpt`) for three validation runs in ablation studies.
 
@@ -60,7 +64,7 @@
 
 ## Reference
 - Li J., Yanagisawa K., and Akiyama Y. [CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation](https://doi.org/10.1093/bib/bbae417), _Briefings in Bioinformatics_, 2024, 25(5), bbae417.
-- Li J., Yanagisawa K., and Akiyama Y. [CycPeptMP: Enhancing Membrane Permeability Prediction of Cyclic Peptides with Multi-Level Molecular Features and Data Augmentation](https://www.biorxiv.org/content/10.1101/2023.12.25.573282v1), _bioRxiv preprint_, 2023, 2023.12. 25.573282.
+
 
 
 ## Contact
