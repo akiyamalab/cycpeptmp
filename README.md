@@ -2,11 +2,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 
-<!-- ## About open source
-- The paper of CycPeptMP is currently under review, since reviewers may also submit comments for revision, I have not fully published my code and data (the bioRxiv preview version of the paper also did not show the GitHub link).
-- The peer review process is expected to be completed by the end of July. -->
-
-
 
 ## About
 - Python implementation of **CycPeptMP**.
